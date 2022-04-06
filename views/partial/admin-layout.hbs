@@ -1,0 +1,52 @@
+{{#if login}}
+{{{body}}}
+{{else}}
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Admin Pannel </a>
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/admin">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">All Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/All-Orders">All orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/add-products">Add Products</a>
+                    </li>
+                   </ul>
+                   <div class="dropdown ">
+                                <button class="btn btn-secondary dropdown-toggle btn-sm " type="button"
+                                    id='dropdownMenuButton' data-toggle="dropdown"
+                                    aria-expanded="false">{{admin1.name}}</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/logout">Logout</a>
+
+                                </div>
+                            </div>
+
+               
+            </div>
+           
+
+        </div>
+    </nav>
+</header>
+{{{body}}}
+{{/if}}
+
+{{!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
+
+ 

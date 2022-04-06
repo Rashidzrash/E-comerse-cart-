@@ -1,0 +1,34 @@
+<div class="row mb-5" style="margin-top:7em;">
+  <h1 class="m-auto"><u>Add Products</u></h1>
+</div>
+<div class='row' style="margin-left:40%;">
+
+  <form action="/admin/add-products" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="Name" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input type="text" class="form-control" name="category" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" class="form-control" name="price" placeholder="">
+    </div>
+    <div>
+      <img style='width: 70px;height: auto;' id="img">
+    </div>
+    <div class="form-group">
+     
+      <input type="file" class="form-control-file" name="image"  onchange="showPreview(event)">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <script>
+    function showPreview(event) {
+      document.getElementById('img').src = URL.createObjectURL(event.target.files[0])
+
+    }
+
+  </script>

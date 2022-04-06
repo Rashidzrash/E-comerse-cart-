@@ -1,0 +1,32 @@
+<section class="container mb-5">
+ <div class="col-12 "style='margin-top: 11em;'>
+            <h1 class="h2 text-center" style="margin-bottom: 2em;">Users List</h1>
+            <div class="table-responsive ">
+              <table id='userTable' class="table table-bordered table-striped table-order-history">
+                <thead>
+                  <tr>
+                    <th scope="col"># </th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email </th>
+                    <th scope="col">Full Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each users}}
+                  <tr>
+                    <td>1</td>
+                    <td><b>{{this.UserName}}</b></td>
+                    <td>{{this.Email}}</td>
+                    <td><a href="/admin/full-details/{{this._id}}" class="btn btn--grey btn--sm">View Details</a></td>
+                  </tr>
+                  {{/each}}
+                  </tbody>
+              </table>
+            </div>
+            </div>
+            </section>
+            <script>
+  $(document).ready( function () {
+    $('#userTable').DataTable();
+} );
+</script>

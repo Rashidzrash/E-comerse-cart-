@@ -1,0 +1,75 @@
+<section class="container mb-5">
+
+    
+    
+ <div class="col-12 "style='margin-top: 11em;'>
+    
+                 
+     
+            <h1 class="h2 text-center" style="margin-bottom: 2em;">All Orders</h1>
+            <label class=""><strong>Total Orders : {{totalOrders}}</strong></label><br>
+            <label class=""><strong>Total Profit : ${{totalProfit}}</strong></label>
+            <div class="table-responsive ">
+              <table id='orderTable' class="table table-bordered table-striped table-order-history">
+                <thead>
+                  <tr>
+                    <th scope="col"># </th>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Order Date </th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Full Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each orders}}
+                  <tr>
+                    <td>1</td>
+                    <td><b>{{this._id}}</b></td>
+                    <td>{{this.Date}}</td>
+                    <td>{{this.details.paymentMethod}}</td>
+                    <td>${{this.details.TotalPrice}}</td>
+                    <td style="width: 8em;" >
+                    <select class="custom-select d-block w-100" id='{{this._id}}' onchange="status('{{this._id}}');" value=''>
+                    <option disabled selected hidden>{{this.status}}</option>
+                    <option>Placed</option>
+                    <option value="Shipped">Shipped</option>
+                     <option value="Delivered">Delivered</option>
+                    
+                  </select>
+                 </td>
+                    <td><a href="/admin/full-details/{{this._id}}" class="btn btn--grey btn--sm">View Details</a></td>
+                  </tr>
+                  {{/each}}
+                  </tbody>
+              </table>
+            </div>
+            </section>
+            <script>
+               
+               function status(id){
+                  
+                  $.ajax({
+                      url:'/admin/status-change',
+                      method:'post',
+                      data:{
+                          id:id,
+                          state:document.getElementById(id).value
+                      },
+                      success:(response)=>{
+                          if(response.status){
+                          alert('oderId:'+id+'changed')
+                          }
+                      }
+                  })
+               }
+
+            </script>
+             <script>
+  $(document).ready( function () {
+    $('#orderTable').DataTable();
+} );
+</script>
+
+            

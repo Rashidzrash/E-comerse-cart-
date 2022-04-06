@@ -1,0 +1,237 @@
+{{#if item}}
+<section style="margin-top: 5em;">
+  <link rel='stylesheet' href='/stylesheets/cart.css' />
+  <div class="px-4 px-lg-0">
+    <!-- For demo purpose -->
+    <div class="container text-black py-5 text-center">
+      <h1 class="display-4"><b>Shopping Cart</b></h1>
+
+      </p>
+    </div>
+    <!-- End -->
+
+    <div class="pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 p-5 bg-white rounded shadow-sm ">
+
+            <!-- Shopping cart table -->
+            <div class="table-responsive">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="p-2 px-3 text-uppercase">Product</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase">Price</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase ">Quantity</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase">Remove</div>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {{#each cartItems}}
+                  <tr>
+
+                    <th scope="row" class="border-0">
+                      <div class="p-2">
+                        <img src="/images/{{this.product._id}}.png" alt="" width="70"
+                          class="img-fluid rounded shadow-sm">
+                        <div class="ml-3 d-inline-block align-middle">
+                          <h6 class="mb-0">
+                            <class="text-dark d-inline-block align-middle">{{this.product.Name}}
+                          </h6><span class="text-muted font-weight-normal font-italic d-block">Category:
+                            {{this.product.category}}</span>
+                        </div>
+                      </div>
+                    </th>
+
+                    <td class="border-0 align-middle"><strong>$ {{this.product.price}}</strong></td>
+
+                    <td class=" align-middle " style="border-top: #eeeeee;border-bottom: #eeeeee;">
+                      <input type="button" value="-" class="button-minus" data-field="quantity"
+                        onclick="addItem('{{this._id}}','{{this.product._id}}','{{this.product.price}}',-1)">
+                      <input readonly type="text" value="{{this.quantity}}" name="quantity"
+                        class="quantity-field align-middle" id='{{this.product._id}}'>
+                      <input type="button" value="+" class="button-plus " data-field="quantity"
+                        onclick="addItem('{{this._id}}','{{this.product._id}}','{{this.product.price}}',1)">
+                    </td>
+
+                    <td class="border-0 align-middle"><button class="text-dark"
+                        onclick="delPro('{{this._id}}','{{this.product._id}}')"><i
+                          class="fa fa-trash ml-4"></i></button></td>
+                  </tr>
+                  {{/each}}
+                  {{!-- border-top:1px; --}}
+                </tbody>
+
+              </table>
+
+            </div>
+            <!-- End -->
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+          <div class="p-4">
+            <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.
+            </p>
+            <ul class="list-unstyled mb-4">
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal
+                </strong><strong>$<span id='subtotal'>{{totalprice.total}}</span></strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and
+                  handling</strong><strong>$<span>{{totalprice._id}}</span></strong></li>
+
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                <h5 class="font-weight-bold">$<span id='total'>{{total}}</span></h5>
+
+              </li>
+            </ul><a href="/checkout" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+{{else}}
+<section>
+  <div class="container-fluid mt-100" style="margin-top:10em;margin-bottom:7em;">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="">
+          <div class="card-body cart">
+            <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" width="130"
+                height="130" class="img-fluid mb-4 mr-3">
+              <h3><strong>Your Cart is Empty</strong></h3>
+              <h4>Add something to make me happy :)</h4> <a href="/" class="btn btn-primary cart-btn-transform m-3"
+                data-abc="true">continue shopping</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{/if}}
+
+<script>
+  function addItem(cartId, proId, price, count) {
+    quantity1 = parseInt(document.getElementById(proId).value)
+    price = parseInt(price)
+    count = parseInt(count)
+    subtotal = document.getElementById('subtotal').innerHTML
+    console.log(subtotal)
+    $.ajax({
+      url: '/product-quantity',
+      data: {
+        cart: cartId,
+        product: proId,
+        count: count,
+        quantity: quantity1
+
+      },
+      method: 'post',
+      success: (response) => {
+        if (response) {
+          document.getElementById(proId).value = quantity1 + count
+          let count1 = $('#cart-count').html()
+          count1 = parseInt(count1) + count
+          $('#cart-count').html(count1)
+          if (count == 1) {
+            document.getElementById('subtotal').innerHTML = parseInt(subtotal) + price
+            document.getElementById('total').innerHTML = parseInt(subtotal) + price + 10
+          } else {
+            document.getElementById('subtotal').innerHTML = parseInt(subtotal) - price
+            document.getElementById('total').innerHTML = parseInt(subtotal) - price + 10
+          }
+        }
+
+      }
+    })
+  }
+</script>
+<script>
+  function delPro(cartId, proId) {
+    console.log(cartId, proId)
+    $.ajax({
+      url: '/del-product',
+      data: {
+        cart: cartId,
+        product: proId
+      },
+      method: 'post',
+      success: (response) => {
+        if (response) {
+          alert('deleted')
+          location.reload()
+        }
+      }
+    })
+  }
+</script>
+<style>
+  input,
+  textarea {
+
+    box-sizing: border-box;
+    margin: 0;
+    width: 3em;
+    outline: none;
+    padding: 10px;
+    height: 2.1em;
+    text-align: center;
+
+  }
+
+  input[type="button"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+
+
+  .button-minus,
+  .button-plus {
+    font-weight: bold;
+    height: 36px;
+    padding: 0;
+    width: 38px;
+    position: relative;
+  }
+
+  .quantity-field {
+    position: relative;
+    height: 38px;
+    left: -6px;
+    text-align: center;
+    width: 62px;
+    display: inline-block;
+    font-size: 13px;
+    margin: 0 0 5px;
+    resize: vertical;
+  }
+
+  .button-plus {
+    left: ;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+  }
+</style>

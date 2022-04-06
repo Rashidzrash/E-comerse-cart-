@@ -1,0 +1,282 @@
+<section>
+
+  <main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Checkout</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form id="checkout" class="card-body">
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-3">
+
+                  <!--firstName-->
+                  <div class="md-form ">
+                    <input type="text" name="firstName" class="form-control">
+                    <label for="firstName" class="">First name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-3">
+
+                  <!--lastName-->
+                  <div class="md-form">
+                    <input type="text" name="lastName" class="form-control">
+                    <label for="lastName" class="">Last name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+
+
+              <!--email-->
+              <div class="md-form mb-3">
+                <input type="text" name="email" class="form-control" placeholder="youremail@example.com">
+                <label for="email" class="">Email (optional)</label>
+              </div>
+
+              <!--address-->
+              <div class="md-form mb-3">
+                <input type="text" name="address" class="form-control" placeholder="1234 Main St">
+                <label for="address" class="">Address</label>
+              </div>
+
+              <!--address-2-->
+              <div class="md-form mb-3">
+                <input type="text" name="address-2" class="form-control" placeholder="Apartment or suite">
+                <label for="address-2" class="">Address 2 (optional)</label>
+
+              </div>
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-12 mb-3">
+
+                  <label for="country">Country</label>
+                  <select class="custom-select d-block w-100" name="country" required>
+                    <option value="">Choose...</option>
+                    <option>United States</option>
+                    <option>Canada</option>
+                    <option>India</option>
+                    <option>United Kingdom</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid country.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-6 mb-3">
+
+                  <label for="state">State</label>
+                  <input type="text" class="form-control" name="state" placeholder="" required>
+
+                  <div class="invalid-feedback">
+                    Please provide a valid state.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-6 mb-3">
+
+                  <label for="zip">Zip</label>
+                  <input type="text" class="form-control" name="zip" placeholder="" required>
+                  <div class="invalid-feedback">
+                    Zip code required.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+              {{!-- <hr> --}}
+
+
+              {{!-- <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+              </div> --}}
+
+              {{!-- <hr> --}}
+
+              <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                  <input id="Online" name="paymentMethod" value="Online" type="radio" class="custom-control-input"
+                    checked required>
+                  <label class="custom-control-label" for="Online">Online Payment</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input id="COD" name="paymentMethod" value="COD" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="COD">COD</label>
+                </div>
+              </div>
+              <hr class="mb-4">
+              <input type="text" name='userId' value="{{user._id}}" hidden>
+              <input type="number" name='TotalPrice' value="{{total1}}" hidden>
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">{{cartcount}}</span>
+          </h4>
+
+          <!-- Cart -->
+          {{#each cart}}
+          <ul class="list-group mb-3 z-depth-1">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div class="pr-3">
+                <img src="/images/{{this.product._id}}.png" alt="" width="70">
+              </div>
+              <div class="mr-auto">
+                <h6 class="my-0">{{this.product.Name}}</h6>
+                <small class="text-muted">Quantity: {{this.quantity}}</small><br>
+                <small class="text-muted">Price: ${{this.product.price}}</small>
+              </div>
+              <span class="text-muted">${{this.total}}</span>
+            </li>
+            {{/each}}
+            
+            
+            <li class="list-group-item d-flex justify-content-between">
+              <span>SubTotal</span>
+              ${{subtotal.total}}
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Shipping Charge</span>
+              ${{subtotal._id}}
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span><strong>
+                  <h5>Total (USD)</h5>
+                </strong></span>
+              <strong>
+                <h5>${{total1}}</h5>
+              </strong>
+            </li>
+          </ul>
+          <!-- Cart -->
+
+          <!-- Promo code -->
+         
+          <!-- Promo code -->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+  $("#checkout").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/checkout-Details',
+      method: 'post',
+      data: $('#checkout').serialize(),
+      success: (response) => {
+        if (response.orderSuccess) {
+          location.href = '/order-success'
+        } else {
+
+          razorpay(response)
+        }
+
+      }
+
+    })
+  })
+  function razorpay(order) {
+    var options = {
+      "key": "rzp_test_rVaG1PeRrnd8Em", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "Acme Corp",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the previous step
+      "handler": function (response) {
+        verifypay(response, order)
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
+  }
+
+  function verifypay(response, order) {
+    $.ajax({
+      url: '/verifyPayment',
+      data: {
+        response: response,
+        orderDetails: order
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.status) {
+          location.href = '/order-success'
+        } else {
+          alert('PaymentFiled')
+        }
+      }
+    })
+  }
+</script>
